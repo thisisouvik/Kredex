@@ -200,9 +200,27 @@ export function WalletCard({
         </button>
       </div>
 
-      <div className="wallet-card-addressline">
-        <span className="wallet-card-addresslabel">Wallet address</span>
-        <span className="wallet-card-addressvalue">{shortAddress}</span>
+      <div className="wallet-card-addressline" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div>
+          <span className="wallet-card-addresslabel">Wallet address</span>
+          <span className="wallet-card-addressvalue">{shortAddress}</span>
+        </div>
+        {walletConnected && walletAddress && (
+          <button 
+            type="button" 
+            onClick={() => {
+              navigator.clipboard.writeText(walletAddress);
+              alert("Wallet address copied!");
+            }}
+            style={{ 
+              background: "transparent", border: "1px solid var(--border)", 
+              borderRadius: "4px", padding: "0.2rem 0.5rem", fontSize: "0.75rem", 
+              cursor: "pointer", color: "var(--text-secondary)" 
+            }}
+          >
+            Copy
+          </button>
+        )}
       </div>
 
       <div className="wallet-card-grid">
