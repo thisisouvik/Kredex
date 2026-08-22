@@ -411,7 +411,7 @@ export function LenderForms({ pools, positions, platformAddress }: LenderFormsPr
                </p>
                <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
                  <a 
-                   href={`https://stellar.expert/explorer/testnet/tx/${successTx.hash}`} 
+                   href={`https://stellar.expert/explorer/testnet/tx/${successTx.hash}?network=testnet`} 
                    target="_blank" rel="noopener noreferrer"
                    className="workspace-nav-link"
                    style={{ background: "rgba(34,207,157,0.2)", padding: "0.5rem 1rem", borderRadius: "9999px", fontSize: "0.85rem", fontWeight: 600, color: "#22cf9d", textDecoration: "none" }}

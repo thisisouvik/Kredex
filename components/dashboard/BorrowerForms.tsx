@@ -409,7 +409,7 @@ export function BorrowerForms({
             <p className="workspace-card-copy">Loan #{String(selectedRepaymentLoan.id).slice(0, 8)}</p>
             {selectedRepaymentLoan.tx_hash && (
               <p className="workspace-card-copy" style={{ fontSize: "0.8rem", color: "var(--text-muted)", marginTop: "0.2rem" }}>
-                Tx: <a href={`https://stellar.expert/explorer/testnet/tx/${selectedRepaymentLoan.tx_hash}`} target="_blank" rel="noreferrer" style={{ textDecoration: "underline", color: "var(--indigo-light)" }}>{selectedRepaymentLoan.tx_hash.slice(0, 8)}...{selectedRepaymentLoan.tx_hash.slice(-8)}</a>
+                Tx: <a href={`https://stellar.expert/explorer/testnet/tx/${selectedRepaymentLoan.tx_hash}?network=testnet`} target="_blank" rel="noreferrer" style={{ textDecoration: "underline", color: "var(--indigo-light)" }}>{selectedRepaymentLoan.tx_hash.slice(0, 8)}...{selectedRepaymentLoan.tx_hash.slice(-8)}</a>
               </p>
             )}
             <p className="workspace-card-copy" style={{ marginTop: "0.5rem" }}>Still owe: {formatCurrency(dueAmount)}</p>

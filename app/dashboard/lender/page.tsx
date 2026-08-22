@@ -284,7 +284,7 @@ export default async function LenderHomePage() {
                           <td>
                             {finalTxHash ? (
                               <a
-                                href={`https://stellar.expert/explorer/testnet/tx/${finalTxHash}`}
+                                href={`https://stellar.expert/explorer/testnet/tx/${finalTxHash}?network=testnet`}
                                 target="_blank"
                                 rel="noreferrer"
                                 style={{

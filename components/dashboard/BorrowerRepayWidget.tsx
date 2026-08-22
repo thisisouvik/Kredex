@@ -64,7 +64,7 @@ function SuccessOverlay({ data, onClose }: { data: SuccessData; onClose: () => v
         
         {data.txHash && (
            <a
-             href={`https://stellar.expert/explorer/testnet/tx/${data.txHash}`}
+             href={`https://stellar.expert/explorer/testnet/tx/${data.txHash}?network=testnet`}
              target="_blank"
              rel="noreferrer"
              style={{ display: "inline-block", margin: "0.5rem 0 1.5rem", color: "#7e2fd0", fontSize: "0.85rem", fontWeight: 700 }}
