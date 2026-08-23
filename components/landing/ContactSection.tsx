@@ -30,7 +30,7 @@ export function ContactSection() {
           </form>
           <div style={{ marginTop: "2rem", paddingTop: "1.5rem", borderTop: "1px solid rgba(0,0,0,0.1)", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "0.9rem", color: "var(--text-secondary)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <span>✉️</span> support@kredex.io
+              <span>✉️</span> teamrayosfficial@gmail.com
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
               <span>📍</span> Global Network

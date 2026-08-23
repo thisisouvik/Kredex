@@ -68,3 +68,31 @@ jobs:
       - name: Build Next.js
         run: npm run build
 
+  deploy:
+    name: Deploy to Production
+    needs: [test-smart-contracts, build-frontend]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy Frontend to Vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+
+      - name: Setup Stellar CLI for Contract Deployment
+        run: |
+          curl -sL https://github.com/stellar/stellar-cli/releases/latest/download/stellar-cli-linux-amd64.tar.gz | tar -xz
+          sudo mv stellar-cli /usr/local/bin/stellar
+
+      - name: Deploy Smart Contracts to Testnet
+        working-directory: ./contracts
+        run: |
+          echo "Deploying contracts to Stellar network..."
+          # Deploy scripts would be executed here using the stellar CLI
+          # stellar contract deploy --wasm target/wasm32-unknown-unknown/release/reputation.wasm --network testnet --source alice
