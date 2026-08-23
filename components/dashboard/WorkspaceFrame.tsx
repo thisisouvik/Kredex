@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import React from "react";
 import { NotificationWidget } from "./NotificationWidget";
 import { RealtimeNotifications } from "./RealtimeNotifications";
 import { UrlAlerts } from "./UrlAlerts";
