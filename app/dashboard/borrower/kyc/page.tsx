@@ -268,6 +268,28 @@ export default function KycPage() {
         }}>
           {cfg.icon}
         </div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
+          <h2 className="font-display" style={{ fontSize: "1.5rem", fontWeight: 700 }}>
+            SEP-12 KYC Verification
+          </h2>
+          <button 
+            type="button"
+            onClick={() => {
+              // Simulate auto-filling from user profile
+              setForm(prev => ({
+                ...prev,
+                first_name: "Jane",
+                last_name: "Doe",
+                birth_date: "1990-01-01",
+                country_code: "US"
+              }));
+              alert("Auto-filled from your profile data!");
+            }}
+            style={{ padding: "0.5rem 1rem", fontSize: "0.8rem", borderRadius: "0.5rem", border: "1px solid var(--border)", background: "var(--bg-elevated)", cursor: "pointer", fontWeight: 600 }}
+          >
+            ✨ Auto-fill from Profile
+          </button>
+        </div>
         <h1 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "0.4rem", color: "var(--text-primary)" }}>
           Identity Verification
         </h1>

@@ -2,6 +2,7 @@ import { WorkspaceFrame } from "@/components/dashboard/WorkspaceFrame";
 import { WalletCard } from "@/components/dashboard/WalletCard";
 import { requireAuthenticatedUser } from "@/lib/auth/session";
 import { getLenderDashboardMetrics, presentLenderMetrics } from "@/lib/dashboard/metrics";
+import { AnalyticsChart } from "@/components/dashboard/AnalyticsChart";
 import prisma from "@/lib/prisma";
 import { formatCurrency } from "@/lib/utils/formatting";
 import { lenderNavLinks } from "@/lib/dashboard/lender-links";
@@ -190,7 +191,10 @@ export default async function LenderHomePage() {
           ))}
         </section>
 
-        {/* ── Recent positions ────────────────────────────────────── */}
+        {/* 📊 Analytics Chart */}
+        <AnalyticsChart />
+
+        {/* 📋 Recent positions ───────────────────────────────────────────────────────────── */}
         <section style={{ display: "grid", gap: "1.5rem" }}>
           {positions.length > 0 && (
             <article className="workspace-card workspace-card--full">
