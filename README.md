@@ -77,16 +77,16 @@ We actively listen to our users!
 | Aditya Jha | GALK4MID2BKRGDIFYAGRBJ3P2ZDSQJQASWMFAEMP25DPO2O5ISMXVTTB | Borrower | Locking feature like a user can't lend and borrow at the same time. | In KYC system please secure it more. | - | [`4c60777`](https://github.com/thisisouvik/trustlend-mainnet/commit/4c60777) / [`1824c2c`](https://github.com/thisisouvik/trustlend-mainnet/commit/1824c2c) |
 | Rupam Ghosh | GBV4FZVZKT26JNLAIMGSNUDDREZLP4ESPOMDA4X6LGBTLUP5XAP73TXI | Lender | Lending | No | No issues | - |
 | Amitabh Dey | GA3EHDIPTPLQTQESCNR4TSJYBSERD57KERCNFHGWEJ5OX2XSWTMJO424 | Lender | the borrow and lending feature is so good | nope | no its way smooth for any bugs | - |
-| pritam mondal | GATJMD6BGNK4FQYNFWB354N7RP4XHA2R74GNSYM472ALNLJFX7NXBS3X | Borrower | well design applicaiton | need uiux more improvement | - | `[Commit-D]` / `[Commit-E]` |
+| pritam mondal | GATJMD6BGNK4FQYNFWB354N7RP4XHA2R74GNSYM472ALNLJFX7NXBS3X | Borrower | well design applicaiton | need uiux more improvement | - | [`f5a7453`](https://github.com/thisisouvik/trustlend-mainnet/commit/f5a7453) / `[Commit-E]` |
 | Sayan Sadhukhan | GCVT3KDQT3Z2JPWODBMHLX4ODSIKDZ7CTZYZTKHXIQLTWLF5TBRNXJHC | Borrower | The decentralized micro-lending workflow | transaction history with explorer links, real-time notifications | adding clearer loading indicators | [`8d245a5`](https://github.com/thisisouvik/trustlend-mainnet/commit/8d245a5) / `[Commit-E]` / `[Commit-H]` |
 | Elijah Negasi | GDT2V3UDWS2EY4LYI7CGOOV27ATSZOSYG5HGJO66UVAIIKR2MO5LXMU2 | Both | Applying for a loan | I think its very straightforward | No errors nor bugs so far. | - |
 | Samuel | GAIR676G75LUM52NOVVB25UOSOR6ESYUP5OPEU6ZEFBK5CHGMA5C6WRE | Borrower | To be able to borrow | Nah | No | - |
 | Mustafa Çolak | GBUJJIYNPOC57O6CIFKFOBLPNTS6I5IYNGO5XQY7DAIPQ6JCU7ZBV7LN | Both | The clean user interface | simple analytics/history charts | No bugs encountered so far! | `[Commit-H]` |
-| Shashi verma | GCDLL4UXPHVPK6PHNINQ2J3EK5EA6P56Q7MZYPWOBJLERNSOSVBP7R2M | Both | The on-chain reputation score | detailed loan/risk dashboard | able to copy own wallet address | [`6aac61a`](https://github.com/thisisouvik/trustlend-mainnet/commit/6aac61a) / `[Commit-D]` |
+| Shashi verma | GCDLL4UXPHVPK6PHNINQ2J3EK5EA6P56Q7MZYPWOBJLERNSOSVBP7R2M | Both | The on-chain reputation score | detailed loan/risk dashboard | able to copy own wallet address | [`6aac61a`](https://github.com/thisisouvik/trustlend-mainnet/commit/6aac61a) / [`f5a7453`](https://github.com/thisisouvik/trustlend-mainnet/commit/f5a7453) |
 | Sadiya Mulani | GBTCGV43NLHEEBMCA5DWFZT6GOJYYCPHXNOEALTBQ7TREIQKQQAVLYT4 | Borrower | Clean UI | Nothing, everything is perfect. | No | - |
-| Arihant Sen | GDX4565AJ4DBGP3HGDIV7F6QJ3IPOVDLG3BOXTHS5ITWKJMEWND3Y7HK | Borrower | easy onboarding experience | landing page is incomplete. Key elements like contact details, a footer | - | `[Commit-C]` |
+| Arihant Sen | GDX4565AJ4DBGP3HGDIV7F6QJ3IPOVDLG3BOXTHS5ITWKJMEWND3Y7HK | Borrower | easy onboarding experience | landing page is incomplete. Key elements like contact details, a footer | - | [`5c14b5a`](https://github.com/thisisouvik/trustlend-mainnet/commit/5c14b5a) |
 | Rizwan Moulvi | GDCP2LXKUNBHFV4FPG4SDRIIQ5WVJ2OWH7WJWBHOK5TCNXKSDI74O32G | Borrower | Account can be opened simply | Its good and useful | transection verify link after transaction is not working | [`8d245a5`](https://github.com/thisisouvik/trustlend-mainnet/commit/8d245a5) |
-| Aritra Mondal | GCKCB3VVRFWTDIIQ6E2VFRIKCGE4CZEWHWZJCLWCPG37VGAPMKWNW4TW | Lender | Walkthrough for beginners | Risk Dashboard is empty | risk dashboard need to be checked | `[Commit-D]` |
+| Aritra Mondal | GCKCB3VVRFWTDIIQ6E2VFRIKCGE4CZEWHWZJCLWCPG37VGAPMKWNW4TW | Lender | Walkthrough for beginners | Risk Dashboard is empty | risk dashboard need to be checked | [`f5a7453`](https://github.com/thisisouvik/trustlend-mainnet/commit/f5a7453) |
 | Anirban Saha | GCCOAGPSAKD5E6ES2DIU64NXWG6O4M4HP5JXFMYLV3NR5SXOX2TCWEDQ | Lender | pool invested | no such thing | no | - |
 | Ashmit Tiwari | GAPVN4B4EYFBFR5GKKKAITUXPUWWZ7VQCWK7273A2MT46K7ZBA4ILITI | Borrower | Sigh up | Nothing | Txn hash link after giving loan is not giving me properly result | [`8d245a5`](https://github.com/thisisouvik/trustlend-mainnet/commit/8d245a5) |
 | Prakhar Deshpandey | GCVODPBH7PNE6AENNEYO6PFDH3VSF5JKYH6ULN3ZICROIWYAGJWLXSJY | Lender | Every transection is smooth | Platform is useful for me | NA | - |
@@ -96,7 +96,7 @@ We actively listen to our users!
 | Manish Dasgupta | GC22Z2IN3ROLZFW3JEU64C4IZZ74Z5RZWOG4OO64FJPKNMS77GZGVBMA | Borrower | Borrowing and KYC | i didn't find any | NA | - |
 | Joy Pal | GDQJ7VPDOB247LD6D4QD6UQIYBKNVFU7UKNJGE55K77S23XMG77NEY33 | Lender | Pool Investment | Nothing it good | NA | - |
 | Ratul Sarkar | GC2Q4MY3MWAV4TUVXXTYPPHC2OV55E7HNRDDMGD4VMOQLQKJGQRGSW3B | Lender | Lending UX flow | everything is good | in the history txn hash is not showing | [`8d245a5`](https://github.com/thisisouvik/trustlend-mainnet/commit/8d245a5) |
-| Satish Rajput | GAS6ZE6F6JD7VKPXHAHFIJ4WXEQHH5WEEKBNNMZSN4T3IPWJQWGNDP6R | Both | Each step txn hash verify | I didn't find any | The contact section is to be recommended | `[Commit-C]` |
+| Satish Rajput | GAS6ZE6F6JD7VKPXHAHFIJ4WXEQHH5WEEKBNNMZSN4T3IPWJQWGNDP6R | Both | Each step txn hash verify | I didn't find any | The contact section is to be recommended | [`5c14b5a`](https://github.com/thisisouvik/trustlend-mainnet/commit/5c14b5a) |
 
 ---
 
