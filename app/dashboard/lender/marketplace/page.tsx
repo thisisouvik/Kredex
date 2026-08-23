@@ -16,7 +16,7 @@ export default async function LenderMarketplacePage() {
     where: { userId: user.id, refType: "loan_fund" },
     orderBy: { createdAt: "desc" },
     take: 20,
-    select: { id: true, refId: true, amount: true, metadata: true, createdAt: true },
+    select: { id: true, refId: true, amount: true, metadata: true, createdAt: true, txHash: true },
   }).catch(() => []);
 
   const { getMarketplaceLoans } = await import("@/lib/dashboard/marketplace");
@@ -123,7 +123,7 @@ export default async function LenderMarketplacePage() {
                       {fundedTxs.map((tx) => {
                         let meta: Record<string, string> = {};
                         try { meta = JSON.parse(String(tx.metadata ?? "{}")); } catch { /* ignore */ }
-                        const txHash = meta.txHash ?? "";
+                        const txHash = tx.txHash ?? meta.txHash ?? "";
                         return (
                           <tr key={String(tx.id)}>
                             <td style={{ fontFamily: "monospace", fontSize: "0.82rem" }}>

@@ -192,7 +192,7 @@ export default async function LenderHomePage() {
         </section>
 
         {/* 📊 Analytics Chart */}
-        <AnalyticsChart />
+        <AnalyticsChart deployedCapital={metrics.deployedCapital} />
 
         {/* 📋 Recent positions ───────────────────────────────────────────────────────────── */}
         <section style={{ display: "grid", gap: "1.5rem" }}>
