@@ -300,7 +300,7 @@ export function DirectFundForm({ loan, onClose }: DirectFundFormProps) {
           marginBottom: "1.5rem"
         }}>
           <p style={{ margin: "0 0 0.25rem 0", color: "#e03e3e", fontWeight: 700, fontSize: "0.9rem" }}>Interaction Failed</p>
-          <p style={{ margin: 0, color: "rgba(0,0,0,0.7)", fontSize: "0.8rem", lineHeight: 1.4 }}>{errorMsg}</p>
+        <p style={{ margin: 0, color: "rgba(0,0,0,0.7)", fontSize: "0.8rem", lineHeight: 1.4 }}>{errorMsg}</p>
         </div>
       )}
 
@@ -319,9 +319,18 @@ export function DirectFundForm({ loan, onClose }: DirectFundFormProps) {
             boxShadow: "0 4px 15px rgba(126, 47, 208, 0.25)",
             border: "none",
             borderRadius: "0.5rem",
-            cursor: step !== "idle" && step !== "error" ? "not-allowed" : "pointer"
+            cursor: step !== "idle" && step !== "error" ? "not-allowed" : "pointer",
+            display: "inline-flex",
+            justifyContent: "center",
+            alignItems: "center"
           }}
         >
+          {(step !== "idle" && step !== "error" && step !== "done") && (
+            <svg className="animate-spin" style={{ marginRight: "0.5rem", width: "1.25rem", height: "1.25rem" }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          )}
           {step === "signing" ? "Check Freighter..." :
            step === "done"    ? "Returning..." :
            step === "error"   ? "Try Again" :
