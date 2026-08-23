@@ -5,8 +5,9 @@ export function ContactSection() {
     <section id="contact" className="site-section bg-gradient-to-b from-transparent to-[rgba(126,47,208,0.03)]" style={{ padding: "5rem 1.5rem" }}>
       <div className="crypto-container">
         <SectionTitle 
+          kicker="Support"
           title="Get in Touch" 
-          subtitle="Have questions? We're here to help you navigate decentralized micro-lending."
+          description="Have questions? We're here to help you navigate decentralized micro-lending."
         />
         <div style={{ maxWidth: "600px", margin: "0 auto", background: "#fff", padding: "2.5rem", borderRadius: "1.25rem", boxShadow: "0 12px 32px rgba(0,0,0,0.05)", border: "1px solid rgba(126,47,208,0.15)" }}>
           <form style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
