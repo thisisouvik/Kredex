@@ -5,6 +5,7 @@ import {
   TestimonialsSection,
   UspSection,
   FaqSection,
+  ContactSection,
 } from "@/components/landing";
 import { getAuthenticatedUser } from "@/lib/auth/session";
 import {
@@ -29,6 +30,7 @@ export default async function Home() {
         <UspSection items={reasons} />
         <TestimonialsSection items={testimonials} />
         <FaqSection items={faqItems} />
+        <ContactSection />
       </main>
 
       <SiteFooter links={footerLinks} />
