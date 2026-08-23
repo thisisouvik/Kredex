@@ -367,16 +367,17 @@ sequenceDiagram
 
 ---
 
-## 🔄 CI/CD Workflows
+## 🚀 CI/CD Workflows
 
 GitHub Actions workflows are defined in `.github/workflows/`.
 
-### `ci.yml` — Continuous Integration (runs on every push/PR to `main` and `dev`)
+### `ci.yml` — Continuous Integration & Deployment (runs on every push/PR to `main` and `dev`)
 
 | Job | Steps |
 | :--- | :--- |
 | **Test Soroban Contracts** | Installs Rust with `wasm32-unknown-unknown` target → runs `cargo test` → compiles WASM with `cargo build --target wasm32-unknown-unknown --release` |
 | **Build Next.js Frontend** | Installs Node 20 → `npm ci` → TypeScript check (`tsc --noEmit`) → `npm run lint` → `npm run build` |
+| **Deploy to Production** | Runs conditionally on `main` branch → Validates `VERCEL_TOKEN` and deploys to Vercel via `npx vercel deploy --prod` → Prepares Soroban Smart Contract deployment to the Stellar Testnet via `stellar-cli` |
 
 ### `security.yml` — Security Scanning
 Runs automated dependency and code vulnerability scanning on the frontend.
