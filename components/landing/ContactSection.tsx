@@ -1,3 +1,5 @@
+"use client";
+
 import { SectionTitle } from "./SectionTitle";
 
 export function ContactSection() {
