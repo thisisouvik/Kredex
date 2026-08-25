@@ -97,6 +97,22 @@ We actively listen to our users!
 | Joy Pal | GDQJ7VPDOB247LD6D4QD6UQIYBKNVFU7UKNJGE55K77S23XMG77NEY33 | Lender | Pool Investment | Nothing it good | NA | - |
 | Ratul Sarkar | GC2Q4MY3MWAV4TUVXXTYPPHC2OV55E7HNRDDMGD4VMOQLQKJGQRGSW3B | Lender | Lending UX flow | everything is good | in the history txn hash is not showing | [`8d245a5`](https://github.com/thisisouvik/trustlend-mainnet/commit/8d245a5) |
 | Satish Rajput | GAS6ZE6F6JD7VKPXHAHFIJ4WXEQHH5WEEKBNNMZSN4T3IPWJQWGNDP6R | Both | Each step txn hash verify | I didn't find any | The contact section is to be recommended | [`5c14b5a`](https://github.com/thisisouvik/trustlend-mainnet/commit/5c14b5a) |
+| Mainak Banerjee | GC5J6BN4BXXNE6DR6OHJSRH4WH4EZEFIO4AM2KRNFZEA5DCI3QFKODKA | Borrower | Walkthrough for beginers | No and it is very useful for micro lending | No | [`bbd2316`](https://github.com/thisisouvik/trustlend-mainnet/commit/bbd2316) |
+| Md. Soheb | GBQWJUMYCSE63MT2XBAYK4BMMAJJFNTOR46QGPST4BLSPWBNGLU6FFHD | Lender | Dashboards and pool | The KYC needed to make strong... | KYC policy and progress need to work on | [`1dca5ed`](https://github.com/thisisouvik/trustlend-mainnet/commit/1dca5ed) |
+| Purba Das | GBJA4Z6IXQLVZWMM3U7C7PFRFHWO7CZ3S62SPC6TX2NLV4XS2MQHBC4F | Borrower | Just like the easy onboarding and easy lending. | No such walk through helped me... | NA | [`bbd2316`](https://github.com/thisisouvik/trustlend-mainnet/commit/bbd2316) |
+| Udanshu Ghosal | GC5TRX7OLZP57WKSLIACKAXO7YGHR4NI4BSS3SR3NQDMJL3JDSF7WZJ4 | Lender | Loan and Easy return overall UI is good and user-friendly | No its all good platform is transparent that's all. | No | - |
+| Souvik Khan | GDFEYX5Q7UT4ZUREVHPULKYD6C3EKWQDTJY76OXYWTRTUE7PKUSKWJZG | Borrower | All features are good. | Everything looks cool. | no its smooth | - |
+| Sandhyia Parui | GAXPJXWRLLZWRGJWYDWM7ZQ4RBV77CKRN6BZYPBK7IWLBB7MLUS6P2T3 | Both | Fast transactions and verify link on each steps. | No all the features are good. | The numbers in dashboard are not properly updating for me check that once. | [`4691821`](https://github.com/thisisouvik/trustlend-mainnet/commit/4691821) |
+| Sk. Saif Ali | GDJGF2DQY4Q3RZY3OYAYGETO3SGRKY3KNRSHLZTKLQ7WUIAX5RJXIM3X | Lender | User onboarding sign up experience is very smooth no such hassle. | I think USDC should also be added... | USDC support is suggested. | `Pending (Mainnet)` |
+| Subho Haldar | GC23LEPSSBJL4VJK6LK5RIRRX2ZKJ3OTVXHJT6HSWPMZ4JJDXE3ZRUPE | Lender | pool investment and UI visuals especially graph is great here. | No its all good Pool Invest is good way of passive investment | No bugs got | [`4691821`](https://github.com/thisisouvik/trustlend-mainnet/commit/4691821) |
+| Md. Kaif | GDYF2MPWHTXE63DVLGG3H4JKTCBQ24OZAMGMLBMYY3IEIJLOCVD5CZDU | Lender | I lend and the experience was good. | no its good | I think the page is not getting refreshed after taking loan... | [`bbd2316`](https://github.com/thisisouvik/trustlend-mainnet/commit/bbd2316) |
+| Shrey Tharu | GC3AS7YUTNG5V6OBWIEDDWTFPVZT3DFAYTXUWEYJTXTNXPCE4TVO4Q6T | Both | I like that once a borrower can't lend until loan is clear | Every feature is good | No | - |
+| Subrata Saha | GCSHXA2QD4RS35O2D7OCIRUT6ONNHDWN42YAFTQUT6NWGKGCUGBASQNQ | Lender | Pool Investment | Transaction verify from app | NO bugs encountered | [`b174e2f`](https://github.com/thisisouvik/trustlend-mainnet/commit/b174e2f) |
+| Sarukh Seikh | GAJUWETQPUT4RH6BHWDQOMC6EPTMMW4Q3IW46KSMCZLN7Y25NCLQBOV3 | Borrower | Trust Score based borrowing | No | no errors encountered | [`809acaf`](https://github.com/thisisouvik/trustlend-mainnet/commit/809acaf) |
+| Subhajeet Saha | GBA6F4HQIJ6UY7WXUH2KRMHYIVX57MRFWZP7QS7EB267MYCKJARMH6UP | Both | smooth transactions and UI loading is great | All are working | add a documentation section for this product | [`bbd2316`](https://github.com/thisisouvik/trustlend-mainnet/commit/bbd2316) |
+| Ayush Nandi | GAREG55YYVOTXCA6MK3RKMFNJ2VPNIET3VIEFFJTCQAVFUHFI6CDVGPN | Borrower | Trust based borrowing | Trust score to be enhanced a bit. | No bugs | [`809acaf`](https://github.com/thisisouvik/trustlend-mainnet/commit/809acaf) |
+| Kuntal Jha | GDAUYKURO274AJDEBF5JZDUP5RDBQM6PGUSRVZ7LVSPU25HMBRUQRPY6 | Borrower | I love it that initially there is limitation on loan amount so thinking was good. | No its good | KYC UI could be more better I think there is something issue with that | [`1dca5ed`](https://github.com/thisisouvik/trustlend-mainnet/commit/1dca5ed) |
+| Nabanita Mahanto | GC5TRX7OLZP57WKSLIACKAXO7YGHR4NI4BSS3SR3NQDMJL3JDSF7WZJ4 | Borrower | Over UI is good and no lag | landing page is need to work upon | NA | [`5c14b5a`](https://github.com/thisisouvik/trustlend-mainnet/commit/5c14b5a) |
 
 ---
 
@@ -451,3 +467,4 @@ As KRedex transitions to the Stellar Mainnet, the following implementations are 
 ---
 
 *Thank you for the opportunity. Love Building! ❤️*
+
