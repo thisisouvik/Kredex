@@ -113,6 +113,12 @@ We actively listen to our users!
 | Ayush Nandi | GAREG55YYVOTXCA6MK3RKMFNJ2VPNIET3VIEFFJTCQAVFUHFI6CDVGPN | Borrower | Trust based borrowing | Trust score to be enhanced a bit. | No bugs | [`809acaf`](https://github.com/thisisouvik/trustlend-mainnet/commit/809acaf) |
 | Kuntal Jha | GDAUYKURO274AJDEBF5JZDUP5RDBQM6PGUSRVZ7LVSPU25HMBRUQRPY6 | Borrower | I love it that initially there is limitation on loan amount so thinking was good. | No its good | KYC UI could be more better I think there is something issue with that | [`1dca5ed`](https://github.com/thisisouvik/trustlend-mainnet/commit/1dca5ed) |
 | Nabanita Mahanto | GC5TRX7OLZP57WKSLIACKAXO7YGHR4NI4BSS3SR3NQDMJL3JDSF7WZJ4 | Borrower | Over UI is good and no lag | landing page is need to work upon | NA | [`5c14b5a`](https://github.com/thisisouvik/trustlend-mainnet/commit/5c14b5a) |
+| Subhra Banerjee | GB23YPDN4ZLLFHTLKMTRBGEGI37GPGYXHMCORML35PD7SQA5XKKE2PWA | Both | Walkthrough for beginners | Its useful for micro lending | No bugs everything is smooth | [`bbd2316`](https://github.com/thisisouvik/trustlend-mainnet/commit/bbd2316) |
+| Ismail Rehman | GBYIJRF5CW4QG3XBETDBCNS3K7R65CEDNB4J3QBWKEIPVWMU6MKNIPW6 | Borrower | Everything is clean | No all the features are working and fine | No error I got | - |
+| Tarik | GDDLLEWZE3IZKVHOOPZ2ZVQMJ2HOYFGCHEKMJA3PXY2J7TPK5GDDDQYL | Lender | passive invest options | all are good and the onboard is something I liked about this product | No | - |
+| Harsh Pandey | GDBXA3NAGRLTYP7NI6EIS4QT273UUWHZYN4KCO7JT2E5VYYBSG2CQFYJ | Borrower | Trust Scoring | I can borrow small amount with little fees and interest and hassle free. | on the top the wallet card on clicking disconnect feature is showing bug. | [`91284e9`](https://github.com/thisisouvik/trustlend-mainnet/commit/91284e9) |
+| Asim Das | GDNWLN3JLOCPWWL3WNXKN5PNPHDCJVJR2337VCK3NFK3HCXIDLU2QERC | Borrower | Micro lending and repaying also the interest is very less | All the features are working | No issues with the app | - |
+| Gourish Debnath | GB3G5ZU7BL3PXWZIOJIETBF6FROFEMZVJJVRUUBTZVNRMLJAQPNPLK5Q | Both | KYC verification is actually a great initiative. | KYC was very useful it builds sense of trust for the lenders and borrowers | No all are working fine | [`1dca5ed`](https://github.com/thisisouvik/trustlend-mainnet/commit/1dca5ed) |
 
 ---
 
