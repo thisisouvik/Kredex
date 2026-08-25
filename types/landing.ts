@@ -39,6 +39,7 @@ export interface P2PStep {
 }
 
 export interface FaqItem {
+  category?: string;
   question: string;
   answer: string;
 }

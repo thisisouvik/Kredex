@@ -112,30 +112,60 @@ export const p2pSteps: P2PStep[] = [
 ];
 
 export const faqItems: FaqItem[] = [
+  // General
   {
+    category: "General",
     question: "What is Kredex?",
-    answer:
-      "Kredex is a reputation-based micro-lending platform where creditworthiness is driven by real on-chain financial behaviour, not collateral or paid tasks. All loans are settled in Circle USDC on Stellar.",
+    answer: "Kredex is a reputation-based micro-lending platform where creditworthiness is driven by real on-chain financial behaviour, not collateral or paid tasks. All loans are settled in Circle USDC on Stellar."
   },
   {
-    question: "Do I need a crypto wallet or seed phrase?",
-    answer:
-      "No seed phrase needed. You can sign in with a Passkey (Face ID / fingerprint) directly in your browser. Freighter and Albedo are also supported for desktop users.",
+    category: "General",
+    question: "Is Kredex available in my country?",
+    answer: "Kredex is a decentralized protocol built on the Stellar network. It can be accessed globally, but please ensure compliance with your local financial regulations."
   },
+  // Account
   {
+    category: "Account",
     question: "How is the reputation score calculated?",
-    answer:
-      "The score is stored on Stellar Soroban and reflects repayment history, lending activity, transaction consistency, and KYC tier. It updates automatically after every on-chain event.",
+    answer: "The score is stored on Stellar Soroban and reflects repayment history, lending activity, transaction consistency, and KYC tier. It updates automatically after every on-chain event."
   },
   {
+    category: "Account",
+    question: "How do I increase my borrowing limit?",
+    answer: "Borrowing limits increase automatically as your on-chain reputation score grows. You can also significantly increase your limit by completing SEP-12 KYC verification."
+  },
+  // Wallet and Asset
+  {
+    category: "Wallet and Asset",
+    question: "Do I need a crypto wallet or seed phrase?",
+    answer: "No seed phrase needed. You can sign in with a Passkey (Face ID / fingerprint) directly in your browser. Freighter and Albedo are also supported for desktop users."
+  },
+  {
+    category: "Wallet and Asset",
     question: "What currency are loans in?",
-    answer:
-      "All loans are denominated in Circle USDC — a dollar-pegged stablecoin. On testnet, both USDC and XLM are supported. On mainnet, USDC will be the sole currency.",
+    answer: "All loans are denominated in Circle USDC — a dollar-pegged stablecoin. On testnet, both USDC and XLM are supported. On mainnet, USDC will be the sole currency."
+  },
+  // Transactions
+  {
+    category: "Transactions",
+    question: "Can lenders monitor risk transparently?",
+    answer: "Yes. Lenders can inspect borrower reputation scores, KYC tiers, repayment progression, and escrow status — all on-chain with full transparency."
   },
   {
-    question: "Can lenders monitor risk transparently?",
-    answer:
-      "Yes. Lenders can inspect borrower reputation scores, KYC tiers, repayment progression, and escrow status — all on-chain with full transparency.",
+    category: "Transactions",
+    question: "How fast are funds disbursed?",
+    answer: "Since Kredex runs on the Stellar network, loan disbursements and repayments are settled in roughly 3-5 seconds with near-zero transaction fees."
+  },
+  // Disputes
+  {
+    category: "Disputes",
+    question: "What happens if a borrower defaults?",
+    answer: "If a loan is not repaid by the deadline, the borrower suffers a massive on-chain reputation penalty, restricting future access. Our decentralized insurance pools may also cover a portion of lender losses."
+  },
+  {
+    category: "Disputes",
+    question: "Can a loan be cancelled?",
+    answer: "Once a lender funds a loan and it is locked in the smart contract escrow, it cannot be cancelled. It must be repaid by the borrower or go into default."
   },
 ];
 
