@@ -14,7 +14,7 @@ import type {
 
 export const navItems: NavItem[] = [
   { label: "Home",      href: "/" },
-  { label: "How it works", href: "/how-it-works" },
+  { label: "How it works", href: "https://kredex-docs.vercel.app" },
   { label: "P2P",      href: "/p2p" },
   { label: "FAQ",       href: "/faq" },
 ];
@@ -170,7 +170,7 @@ export const faqItems: FaqItem[] = [
 ];
 
 export const footerLinks: FooterLink[] = [
-  { label: "How it works", href: "/how-it-works" },
+  { label: "How it works", href: "https://kredex-docs.vercel.app" },
   { label: "P2P",         href: "/p2p" },
   { label: "FAQ",          href: "/faq" },
 ];
