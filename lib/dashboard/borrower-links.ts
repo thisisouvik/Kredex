@@ -7,5 +7,5 @@ export const borrowerNavLinks = [
   { href: "/dashboard/borrower/history", label: "History" },
   { href: "/dashboard/borrower/tasks",   label: "Trust Tasks" },
   { href: "/dashboard/borrower/profile", label: "Profile & Settings" },
-  { href: "/how-it-works",               label: "Walkthrough" },
+  { href: "https://kredex-docs.vercel.app", label: "Documentation" },
 ];

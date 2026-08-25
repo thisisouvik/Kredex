@@ -7,5 +7,5 @@ export const lenderNavLinks = [
   { href: "/dashboard/lender/portfolio",   label: "Portfolio" },
   { href: "/dashboard/lender/risk",        label: "Risk" },
   { href: "/dashboard/lender/profile",     label: "Profile & Settings" },
-  { href: "/how-it-works",                 label: "Walkthrough" },
+  { href: "https://kredex-docs.vercel.app", label: "Documentation" },
 ];
