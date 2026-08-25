@@ -99,6 +99,11 @@ export async function POST(request: NextRequest) {
       });
     });
 
+    // "?"? Invalidate Caches "?"?
+    const { invalidateCache } = await import("@/lib/redis/cache");
+    await invalidateCache("marketplace:open_loans");
+    await invalidateCache(`metrics:lender:${user.id}`);
+
     // ── Emit notifications ──
     const { createNotification } = await import("@/lib/notifications");
     // Notify Borrower

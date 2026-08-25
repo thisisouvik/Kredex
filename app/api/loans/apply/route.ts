@@ -120,6 +120,10 @@ export async function POST(request: NextRequest) {
       message: `Your request for ${amount} XLM is now live in the marketplace and waiting for lender funding.`,
     });
 
+    const { invalidateCache } = await import("@/lib/redis/cache");
+    await invalidateCache("marketplace:open_loans");
+    await invalidateCache(`metrics:borrower:${user.id}`);
+
     return NextResponse.json(
       {
         loan: {
