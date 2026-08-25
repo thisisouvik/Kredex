@@ -157,7 +157,7 @@ export function WalletCard({
             <span className={`wallet-status-indicator ${isConnectedState ? "wallet-status-active" : "wallet-status-inactive"}`} aria-hidden="true" />
             <div>
               <p className="wallet-card-title">Wallet {walletConnected ? "Connected" : "Not Connected"}</p>
-              <p className="wallet-card-subtitle">Address {shortAddress}</p>
+              {walletConnected && <p className="wallet-card-subtitle">Address {shortAddress}</p>}
             </div>
           </div>
           <button type="button" className="wallet-card-action" onClick={handleWalletAction} disabled={isBusy} suppressHydrationWarning>
@@ -200,28 +200,30 @@ export function WalletCard({
         </button>
       </div>
 
-      <div className="wallet-card-addressline" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div>
-          <span className="wallet-card-addresslabel">Wallet address</span>
-          <span className="wallet-card-addressvalue">{shortAddress}</span>
+      {walletConnected && (
+        <div className="wallet-card-addressline" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div>
+            <span className="wallet-card-addresslabel">Wallet address</span>
+            <span className="wallet-card-addressvalue">{shortAddress}</span>
+          </div>
+          {walletAddress && (
+            <button 
+              type="button" 
+              onClick={() => {
+                navigator.clipboard.writeText(walletAddress);
+                alert("Wallet address copied!");
+              }}
+              style={{ 
+                background: "transparent", border: "1px solid var(--border)", 
+                borderRadius: "4px", padding: "0.2rem 0.5rem", fontSize: "0.75rem", 
+                cursor: "pointer", color: "var(--text-secondary)" 
+              }}
+            >
+              Copy
+            </button>
+          )}
         </div>
-        {walletConnected && walletAddress && (
-          <button 
-            type="button" 
-            onClick={() => {
-              navigator.clipboard.writeText(walletAddress);
-              alert("Wallet address copied!");
-            }}
-            style={{ 
-              background: "transparent", border: "1px solid var(--border)", 
-              borderRadius: "4px", padding: "0.2rem 0.5rem", fontSize: "0.75rem", 
-              cursor: "pointer", color: "var(--text-secondary)" 
-            }}
-          >
-            Copy
-          </button>
-        )}
-      </div>
+      )}
 
       <div className="wallet-card-grid">
         <div className="wallet-card-metric">
