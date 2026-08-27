@@ -1,4 +1,6 @@
 #![no_std]
+mod interest_rate;
+
 use soroban_sdk::{
     contract, contractimpl, contracttype, symbol_short,
     Address, Env, IntoVal, Symbol, Vec,
@@ -11,6 +13,18 @@ const TTL_THRESHOLD:   u32 = LEDGERS_PER_DAY * 5;  // 5 days  — trigger
 const TTL_EXTEND_TO:   u32 = LEDGERS_PER_DAY * 30; // 30 days — target
 
 // ─── Types ────────────────────────────────────────────────────────────────────
+
+#[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub enum ReputationEvent {
+    TestLoanRepaid,
+    LoanRepaidOnTime,
+    LoanPaidEarly,
+    LoanLate1Day,
+    LoanLate7Days,
+    LoanDefaulted,
+    LateWarning,
+}
 
 #[contracttype]
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -64,6 +78,9 @@ pub enum DataKey {
     IsPaused,
     UsdcToken,
     ReputationContract,
+    DefaultManagementContract,
+    EscrowContract,
+    LiquidityPoolContract,
 }
 
 // ─── Contract ─────────────────────────────────────────────────────────────────
@@ -82,6 +99,9 @@ impl LendingContract {
         admin3: Address,
         usdc_token: Address,
         reputation_contract: Address,
+        default_management_contract: Address,
+        escrow_contract: Address,
+        liquidity_pool_contract: Address,
     ) {
         if env.storage().instance().has(&DataKey::Admins) {
             panic!("Contract already initialised");
@@ -99,6 +119,9 @@ impl LendingContract {
         env.storage().instance().set(&DataKey::IsPaused, &false);
         env.storage().instance().set(&DataKey::UsdcToken, &usdc_token);
         env.storage().instance().set(&DataKey::ReputationContract, &reputation_contract);
+        env.storage().instance().set(&DataKey::DefaultManagementContract, &default_management_contract);
+        env.storage().instance().set(&DataKey::EscrowContract, &escrow_contract);
+        env.storage().instance().set(&DataKey::LiquidityPoolContract, &liquidity_pool_contract);
         env.storage().instance().set(&DataKey::LoanCount, &0u32);
         env.storage().instance().extend_ttl(TTL_THRESHOLD, TTL_EXTEND_TO);
     }
@@ -183,11 +206,23 @@ impl LendingContract {
             soroban_sdk::vec![&env, borrower.clone().into_val(&env)],
         );
 
-        let interest_rate_bps: u32 = env.invoke_contract(
-            &rep_contract,
-            &Symbol::new(&env, "calculate_interest_rate"),
-            soroban_sdk::vec![&env, borrower.clone().into_val(&env)],
+        let pool_contract: Address = env
+            .storage()
+            .instance()
+            .get(&DataKey::LiquidityPoolContract)
+            .expect("Contract not initialised");
+            
+        let pool_metrics: (i128, i128, u32) = env.invoke_contract(
+            &pool_contract,
+            &Symbol::new(&env, "get_pool_metrics"),
+            soroban_sdk::vec![&env],
         );
+        let utilization = pool_metrics.2;
+        let base_dynamic_rate = interest_rate::calculate_dynamic_rate(&env, utilization);
+
+        // Apply a reputation discount (for backwards compatibility with max rate approach or just use dynamic)
+        // We'll just use the dynamic rate purely.
+        let interest_rate_bps = base_dynamic_rate;
 
         if amount > max_loan_amount {
             panic!("Amount exceeds reputation-based limit");
@@ -246,7 +281,7 @@ impl LendingContract {
         loan_id
     }
 
-    pub fn approve_loan(env: Env, lender: Address, loan_id: u32, escrow_id: u32) {
+    pub fn approve_loan(env: Env, lender: Address, loan_id: u32) {
         Self::assert_not_paused(&env);
         lender.require_auth();
 
@@ -266,6 +301,24 @@ impl LendingContract {
         if loan.status != LoanStatus::Pending {
             panic!("Loan is not in PENDING state");
         }
+
+        let escrow_contract: Address = env
+            .storage()
+            .instance()
+            .get(&DataKey::EscrowContract)
+            .expect("Contract not initialised");
+
+        let escrow_id: u32 = env.invoke_contract(
+            &escrow_contract,
+            &Symbol::new(&env, "create_hold"),
+            soroban_sdk::vec![
+                &env,
+                lender.clone().into_val(&env),
+                loan.borrower.clone().into_val(&env),
+                loan_id.into_val(&env),
+                loan.amount.into_val(&env),
+            ],
+        );
 
         loan.lender = lender.clone();
         loan.escrow_id = escrow_id;
@@ -333,6 +386,52 @@ impl LendingContract {
         );
     }
 
+    pub fn fund_from_pool(env: Env, caller1: Address, caller2: Address, loan_id: u32) {
+        Self::assert_not_paused(&env);
+        Self::assert_2_of_3_admins(&env, &caller1, &caller2);
+
+        let loan_key = DataKey::Loan(loan_id);
+        let mut loan: LoanRecord = env
+            .storage()
+            .persistent()
+            .get(&loan_key)
+            .expect("Loan not found");
+        env.storage().persistent().extend_ttl(&loan_key, TTL_THRESHOLD, TTL_EXTEND_TO);
+
+        if loan.status != LoanStatus::Pending {
+            panic!("Loan is not in PENDING state");
+        }
+
+        let pool_contract: Address = env.storage().instance().get(&DataKey::LiquidityPoolContract).unwrap();
+        
+        env.invoke_contract::<()>(
+            &pool_contract,
+            &Symbol::new(&env, "allocate_to_loan"),
+            soroban_sdk::vec![
+                &env,
+                env.current_contract_address().into_val(&env),
+                loan.borrower.clone().into_val(&env),
+                loan.amount.into_val(&env)
+            ],
+        );
+
+        loan.lender = pool_contract;
+        loan.escrow_id = 0; // No escrow for pool loans
+        loan.status = LoanStatus::Active;
+
+        env.storage().persistent().set(&loan_key, &loan);
+        env.storage().persistent().extend_ttl(&loan_key, TTL_THRESHOLD, TTL_EXTEND_TO);
+
+        Self::push_loan_id_for_borrower(&env, &loan.borrower, loan_id);
+        Self::increment_active_borrowings(&env, &loan.borrower);
+        // We don't increment active_lendings for the pool contract to save operations
+        
+        env.events().publish(
+            (symbol_short!("POOL_FUND"), loan_id),
+            (loan.borrower, loan.amount),
+        );
+    }
+
     pub fn record_payment(
         env: Env,
         borrower: Address,
@@ -374,6 +473,28 @@ impl LendingContract {
         let fee_on_payment = capped_amount / 100;
         let lender_amount = capped_amount - fee_on_payment;
         token.transfer(&env.current_contract_address(), &loan.lender, &lender_amount);
+
+        let pool_contract: Address = env.storage().instance().get(&DataKey::LiquidityPoolContract).unwrap();
+        if loan.lender == pool_contract {
+            // Split into principal and interest proportionally
+            let principal_part = if loan.total_due > 0 {
+                (loan.amount * lender_amount) / loan.total_due
+            } else {
+                0
+            };
+            let interest_part = lender_amount - principal_part;
+
+            env.invoke_contract::<()>(
+                &pool_contract,
+                &Symbol::new(&env, "record_repayment"),
+                soroban_sdk::vec![
+                    &env,
+                    env.current_contract_address().into_val(&env),
+                    principal_part.into_val(&env),
+                    interest_part.into_val(&env)
+                ],
+            );
+        }
 
         let pcount_key = DataKey::PaymentCount(loan_id);
         let payment_count: u32 = env
@@ -482,6 +603,26 @@ impl LendingContract {
             &rep_contract,
             &Symbol::new(&env, "add_reputation_event"),
             args,
+        );
+
+        let dm_contract: Address = env
+            .storage()
+            .instance()
+            .get(&DataKey::DefaultManagementContract)
+            .expect("Contract not initialised");
+
+        let days_overdue = Self::days_overdue(env.clone(), loan_id);
+        env.invoke_contract::<()>(
+            &dm_contract,
+            &Symbol::new(&env, "record_default"),
+            soroban_sdk::vec![
+                &env,
+                env.current_contract_address().into_val(&env), // caller
+                loan_id.into_val(&env),
+                loan.borrower.clone().into_val(&env),
+                loan.remaining_due.into_val(&env),
+                days_overdue.into_val(&env),
+            ],
         );
 
         env.events().publish(
@@ -653,10 +794,8 @@ impl LendingContract {
 
     fn decrement_active_borrowings(env: &Env, borrower: &Address) {
         let key = DataKey::ActiveBorrowings(borrower.clone());
-        let mut count: u32 = env.storage().persistent().get(&key).unwrap_or(0);
-        if count > 0 {
-            count -= 1;
-        }
+        let count: u32 = env.storage().persistent().get(&key).unwrap_or(0);
+        let count = count.saturating_sub(1);
         env.storage().persistent().set(&key, &count);
         env.storage().persistent().extend_ttl(&key, TTL_THRESHOLD, TTL_EXTEND_TO);
     }
@@ -671,10 +810,8 @@ impl LendingContract {
 
     fn decrement_active_lendings(env: &Env, lender: &Address) {
         let key = DataKey::ActiveLendings(lender.clone());
-        let mut count: u32 = env.storage().persistent().get(&key).unwrap_or(0);
-        if count > 0 {
-            count -= 1;
-        }
+        let count: u32 = env.storage().persistent().get(&key).unwrap_or(0);
+        let count = count.saturating_sub(1);
         env.storage().persistent().set(&key, &count);
         env.storage().persistent().extend_ttl(&key, TTL_THRESHOLD, TTL_EXTEND_TO);
     }
