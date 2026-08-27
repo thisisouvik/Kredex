@@ -4,7 +4,7 @@ members = [
     "escrow",
     "lending",
     "default_management",
-    "reputation_nft",
+    "reputation_nft", "liquidity_pool", "oracle_adapter",
 ]
 resolver = "2"
 

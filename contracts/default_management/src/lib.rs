@@ -51,6 +51,7 @@ pub enum DataKey {
     Admins,
     IsPaused,
     UsdcToken,
+    LendingContract,
 }
 
 // ─── Contract ─────────────────────────────────────────────────────────────────
@@ -68,6 +69,7 @@ impl DefaultManagementContract {
         admin2: Address,
         admin3: Address,
         usdc_token: Address,
+        lending_contract: Address,
         insurance_seed_amount: i128,
     ) {
         if env.storage().instance().has(&DataKey::Admins) {
@@ -85,6 +87,7 @@ impl DefaultManagementContract {
         env.storage().instance().set(&DataKey::Admins, &admins);
         env.storage().instance().set(&DataKey::IsPaused, &false);
         env.storage().instance().set(&DataKey::UsdcToken, &usdc_token);
+        env.storage().instance().set(&DataKey::LendingContract, &lending_contract);
         env.storage().instance().set(&DataKey::InsuranceEventCount, &0u32);
         env.storage().instance().extend_ttl(TTL_THRESHOLD, TTL_EXTEND_TO);
 
@@ -143,15 +146,19 @@ impl DefaultManagementContract {
 
     pub fn record_default(
         env: Env,
-        caller1: Address,
-        caller2: Address,
+        caller: Address,
         loan_id: u32,
         borrower: Address,
         amount: i128,
         days_overdue: u64,
     ) -> DefaultPhase {
         Self::assert_not_paused(&env);
-        Self::assert_2_of_3_admins(&env, &caller1, &caller2);
+        caller.require_auth();
+
+        let lending_contract: Address = env.storage().instance().get(&DataKey::LendingContract).expect("Not initialised");
+        if caller != lending_contract {
+            panic!("Unauthorised: caller is not lending contract");
+        }
 
         let phase = Self::days_to_phase(days_overdue);
 
