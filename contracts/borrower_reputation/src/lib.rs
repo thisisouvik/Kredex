@@ -1,7 +1,7 @@
 #![no_std]
 use soroban_sdk::{
-    contract, contractimpl, contracttype,
-    Address, Env, String, Vec,
+    contract, contractimpl, contracttype, symbol_short,
+    Address, Env, Symbol, Vec, String, IntoVal
 };
 
 // ─── TTL Constants ────────────────────────────────────────────────────────────
@@ -55,6 +55,7 @@ pub enum DataKey {
     Admins,
     IsPaused,
     LendingContract,
+    NftContract,
 }
 
 // ─── Contract ─────────────────────────────────────────────────────────────────
@@ -72,6 +73,7 @@ impl BorrowerReputationContract {
         admin2: Address,
         admin3: Address,
         lending_contract: Address,
+        nft_contract: Address,
     ) {
         if env.storage().instance().has(&DataKey::Admins) {
             panic!("Contract already initialised");
@@ -88,6 +90,7 @@ impl BorrowerReputationContract {
         env.storage().instance().set(&DataKey::Admins, &admins);
         env.storage().instance().set(&DataKey::IsPaused, &false);
         env.storage().instance().set(&DataKey::LendingContract, &lending_contract);
+        env.storage().instance().set(&DataKey::NftContract, &nft_contract);
         env.storage().instance().extend_ttl(TTL_THRESHOLD, TTL_EXTEND_TO);
     }
 
@@ -226,6 +229,40 @@ impl BorrowerReputationContract {
 
         env.storage().persistent().set(&key, &profile);
         env.storage().persistent().extend_ttl(&key, TTL_THRESHOLD, TTL_EXTEND_TO);
+
+        // NFT Minting Trigger
+        if profile.reputation_tier == ReputationTier::Gold || profile.reputation_tier == ReputationTier::Platinum {
+            if let Some(nft_contract) = env.storage().instance().get::<_, Address>(&DataKey::NftContract) {
+                // Only mint if they don't already have one (or we could let the NFT contract handle the check,
+                // but we should avoid panicking if they already have one to not block repayment)
+                let has_badge: bool = env.invoke_contract(
+                    &nft_contract,
+                    &soroban_sdk::Symbol::new(&env, "has_badge"),
+                    soroban_sdk::vec![&env, borrower.clone().into_val(&env)],
+                );
+
+                if !has_badge {
+                    let tier_val: u32 = if profile.reputation_tier == ReputationTier::Gold { 0 } else { 1 };
+                    let uri = if profile.reputation_tier == ReputationTier::Gold {
+                        soroban_sdk::String::from_str(&env, "https://kredex.io/badges/gold")
+                    } else {
+                        soroban_sdk::String::from_str(&env, "https://kredex.io/badges/platinum")
+                    };
+
+                    env.invoke_contract::<()>(
+                        &nft_contract,
+                        &soroban_sdk::Symbol::new(&env, "mint"),
+                        soroban_sdk::vec![
+                            &env,
+                            env.current_contract_address().into_val(&env),
+                            borrower.clone().into_val(&env),
+                            tier_val.into_val(&env),
+                            uri.into_val(&env)
+                        ],
+                    );
+                }
+            }
+        }
     }
 
     /// Update cumulative borrowed/repaid totals.
@@ -358,9 +395,9 @@ impl BorrowerReputationContract {
         match tier {
             ReputationTier::None     =>      100_0000000,
             ReputationTier::Beginner =>      500_0000000,
-            ReputationTier::Silver   =>    2_000_0000000,
-            ReputationTier::Gold     =>   10_000_0000000,
-            ReputationTier::Platinum =>  100_000_0000000,
+            ReputationTier::Silver   =>   20_000_000_000,
+            ReputationTier::Gold     =>  100_000_000_000,
+            ReputationTier::Platinum =>1_000_000_000_000,
         }
     }
 
@@ -372,7 +409,7 @@ impl BorrowerReputationContract {
         match tier {
             0 =>       50_0000000,  // $50
             1 =>      500_0000000,  // $500
-            _ =>    5_000_0000000,  // $5,000 (tier 2+)
+            _ =>   50_000_000_000,  // $5,000 (tier 2+)
         }
     }
 
@@ -431,7 +468,15 @@ mod tests {
     use super::*;
     use soroban_sdk::{testutils::Address as _, Env};
 
-    fn setup() -> (Env, BorrowerReputationContractClient<'static>, Address, Address, Address, Address, Address) {
+    #[contract]
+    pub struct MockNftContract;
+    #[contractimpl]
+    impl MockNftContract {
+        pub fn has_badge(_env: Env, _holder: Address) -> bool { false }
+        pub fn mint(_env: Env, _minter: Address, _holder: Address, _tier: u32, _uri: soroban_sdk::String) {}
+    }
+
+    fn setup() -> (Env, BorrowerReputationContractClient<'static>, Address, Address, Address, Address, Address, Address) {
         let env = Env::default();
         env.mock_all_auths();
 
@@ -443,17 +488,18 @@ mod tests {
         let admin3  = Address::generate(&env);
         let lending = Address::generate(&env);
         let borrower = Address::generate(&env);
+        let nft_contract = env.register(MockNftContract, ());
 
-        client.initialize(&admin1, &admin2, &admin3, &lending);
+        client.initialize(&admin1, &admin2, &admin3, &lending, &nft_contract);
 
-        (env, client, admin1, admin2, admin3, lending, borrower)
+        (env, client, admin1, admin2, admin3, lending, borrower, nft_contract)
     }
 
     // ── Day 24: Full loan lifecycle ───────────────────────────────────────────
 
     #[test]
     fn test_init_borrower_and_profile() {
-        let (_, client, _, _, _, _, borrower) = setup();
+        let (_, client, _, _, _, _, borrower, _) = setup();
         assert!(!client.has_profile(&borrower));
         client.init_borrower(&borrower);
         assert!(client.has_profile(&borrower));
@@ -468,14 +514,14 @@ mod tests {
     #[test]
     #[should_panic(expected = "Profile already exists")]
     fn test_init_borrower_duplicate_panics() {
-        let (_, client, _, _, _, _, borrower) = setup();
+        let (_, client, _, _, _, _, borrower, _) = setup();
         client.init_borrower(&borrower);
         client.init_borrower(&borrower); // should panic
     }
 
     #[test]
     fn test_reputation_events_on_time_repayment() {
-        let (_, client, _, _, _, lending, borrower) = setup();
+        let (_, client, _, _, _, lending, borrower, _) = setup();
         client.init_borrower(&borrower);
 
         // Loan repaid on time = +20 pts
@@ -487,7 +533,7 @@ mod tests {
 
     #[test]
     fn test_reputation_tier_progression() {
-        let (_, client, _, _, _, lending, borrower) = setup();
+        let (_, client, _, _, _, lending, borrower, _) = setup();
         client.init_borrower(&borrower);
 
         // Reach Beginner (50 pts) via test loan +50
@@ -514,7 +560,7 @@ mod tests {
 
     #[test]
     fn test_score_cannot_go_below_zero() {
-        let (_, client, _, _, _, lending, borrower) = setup();
+        let (_, client, _, _, _, lending, borrower, _) = setup();
         client.init_borrower(&borrower);
 
         // Default gives -100; score should floor at 0
@@ -528,7 +574,7 @@ mod tests {
 
     #[test]
     fn test_default_increments_counter() {
-        let (_, client, _, _, _, lending, borrower) = setup();
+        let (_, client, _, _, _, lending, borrower, _) = setup();
         client.init_borrower(&borrower);
 
         // Give some score first
@@ -544,7 +590,7 @@ mod tests {
 
     #[test]
     fn test_late_payment_deducts_score() {
-        let (_, client, _, _, _, lending, borrower) = setup();
+        let (_, client, _, _, _, lending, borrower, _) = setup();
         client.init_borrower(&borrower);
 
         // Give 100 pts first
@@ -563,7 +609,7 @@ mod tests {
 
     #[test]
     fn test_freeze_and_unfreeze_account() {
-        let (_, client, admin1, admin2, _, _, borrower) = setup();
+        let (_, client, admin1, admin2, _, _, borrower, _) = setup();
         client.init_borrower(&borrower);
 
         assert!(!client.is_frozen(&borrower));
@@ -582,7 +628,7 @@ mod tests {
     #[test]
     #[should_panic(expected = "Requires two distinct admin signatures")]
     fn test_freeze_requires_distinct_admins() {
-        let (_, client, admin1, _, _, _, borrower) = setup();
+        let (_, client, admin1, _, _, _, borrower, _) = setup();
         client.init_borrower(&borrower);
         let reason = soroban_sdk::String::from_str(&client.env, "test");
         client.freeze_account(&admin1, &admin1, &borrower, &reason); // same admin twice
@@ -593,7 +639,7 @@ mod tests {
     #[test]
     #[should_panic(expected = "Contract is paused")]
     fn test_paused_contract_rejects_events() {
-        let (_, client, admin1, admin2, _, lending, borrower) = setup();
+        let (_, client, admin1, admin2, _, lending, borrower, _) = setup();
         client.init_borrower(&borrower);
         client.pause(&admin1, &admin2);
         // Should panic because paused
@@ -602,7 +648,7 @@ mod tests {
 
     #[test]
     fn test_unpause_resumes_events() {
-        let (_, client, admin1, admin2, _, lending, borrower) = setup();
+        let (_, client, admin1, admin2, _, lending, borrower, _) = setup();
         client.init_borrower(&borrower);
         client.pause(&admin1, &admin2);
         client.unpause(&admin1, &admin2);
@@ -616,7 +662,7 @@ mod tests {
     #[test]
     #[should_panic(expected = "Unauthorised: caller is not lending contract")]
     fn test_random_address_cannot_add_event() {
-        let (env, client, _, _, _, _, borrower) = setup();
+        let (env, client, _, _, _, _, borrower, _) = setup();
         client.init_borrower(&borrower);
         let attacker = Address::generate(&env);
         client.add_reputation_event(&attacker, &borrower, &ReputationEvent::LoanRepaidOnTime);
@@ -626,7 +672,7 @@ mod tests {
 
     #[test]
     fn test_interest_rate_decreases_with_tier() {
-        let (_, client, _, _, _, lending, borrower) = setup();
+        let (_, client, _, _, _, lending, borrower, _) = setup();
         client.init_borrower(&borrower);
 
         let rate_none = client.calculate_interest_rate(&borrower);
@@ -642,7 +688,7 @@ mod tests {
 
     #[test]
     fn test_kyc_tier_set_and_get() {
-        let (_, client, admin1, admin2, _, _, borrower) = setup();
+        let (_, client, admin1, admin2, _, _, borrower, _) = setup();
         client.init_borrower(&borrower);
 
         assert_eq!(client.get_kyc_tier(&borrower), 0);
