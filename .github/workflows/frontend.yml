@@ -1,4 +1,4 @@
-name: Kredex CI/CD
+﻿name: Frontend CI/CD
 
 on:
   push:
@@ -7,31 +7,6 @@ on:
     branches: [ "main", "dev" ]
 
 jobs:
-  test-smart-contracts:
-    name: Test Soroban Contracts
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: wasm32-unknown-unknown
-
-      - name: Cache dependencies
-        uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: contracts
-
-      - name: Run Tests
-        working-directory: ./contracts
-        run: cargo test
-
-      - name: Compile Contracts (Dry Run)
-        working-directory: ./contracts
-        run: cargo build --target wasm32-unknown-unknown --release
-
   build-frontend:
     name: Build Next.js Application
     runs-on: ubuntu-latest
@@ -68,9 +43,9 @@ jobs:
       - name: Build Next.js
         run: npm run build
 
-  deploy:
-    name: Deploy to Production
-    needs: [test-smart-contracts, build-frontend]
+  deploy-frontend:
+    name: Deploy Frontend to Vercel
+    needs: [build-frontend]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
@@ -93,14 +68,3 @@ jobs:
           else
             npx vercel deploy --prod --token $VERCEL_TOKEN --yes
           fi
-
-      - name: Setup Stellar CLI for Contract Deployment
-        run: |
-          echo "Simulating Stellar CLI setup for CD pipeline..."
-          # In a real environment, you might use: cargo install --locked stellar-cli
-
-      - name: Deploy Smart Contracts to Testnet
-        working-directory: ./contracts
-        run: |
-          echo "Deploying contracts to Stellar network..."
-          echo "stellar contract deploy --wasm target/wasm32-unknown-unknown/release/reputation.wasm --network testnet --source alice"

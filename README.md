@@ -14,6 +14,17 @@
    <img src="https://img.shields.io/badge/Stellar-Testnet-08B5E5" alt="Stellar" />
    <img src="https://img.shields.io/badge/Soroban-Smart%20Contracts-111827" alt="Soroban" />
 </p>
+<p align="center">
+  <a href="https://github.com/thisisouvik/kredex/actions/workflows/frontend.yml">
+    <img src="https://github.com/thisisouvik/kredex/actions/workflows/frontend.yml/badge.svg" alt="Frontend CI/CD" />
+  </a>
+  <a href="https://github.com/thisisouvik/kredex/actions/workflows/smart-contracts.yml">
+    <img src="https://github.com/thisisouvik/kredex/actions/workflows/smart-contracts.yml/badge.svg" alt="Smart Contracts CI/CD" />
+  </a>
+  <a href="https://github.com/thisisouvik/kredex/actions/workflows/security.yml">
+    <img src="https://github.com/thisisouvik/kredex/actions/workflows/security.yml/badge.svg" alt="Security Scan" />
+  </a>
+</p>
 <br>
 
 ---

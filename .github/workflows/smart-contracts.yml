@@ -1,0 +1,53 @@
+﻿name: Smart Contracts CI/CD
+
+on:
+  push:
+    branches: [ "main", "dev" ]
+  pull_request:
+    branches: [ "main", "dev" ]
+
+jobs:
+  test-smart-contracts:
+    name: Test Soroban Contracts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Cache dependencies
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: contracts
+
+      - name: Run Tests
+        working-directory: ./contracts
+        run: cargo test
+
+      - name: Compile Contracts (Dry Run)
+        working-directory: ./contracts
+        run: cargo build --target wasm32-unknown-unknown --release
+
+  deploy-contracts:
+    name: Deploy Contracts to Testnet
+    needs: [test-smart-contracts]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Stellar CLI for Contract Deployment
+        run: |
+          echo "Simulating Stellar CLI setup for CD pipeline..."
+          # In a real environment, you might use: cargo install --locked stellar-cli
+
+      - name: Deploy Smart Contracts to Testnet
+        working-directory: ./contracts
+        run: |
+          echo "Deploying contracts to Stellar network..."
+          echo "stellar contract deploy --wasm target/wasm32-unknown-unknown/release/reputation.wasm --network testnet --source alice"
