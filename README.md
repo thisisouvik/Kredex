@@ -394,12 +394,12 @@ sequenceDiagram
 
 | Contract Name | Contract ID (Stellar Testnet) | Verification | Functionality |
 | :--- | :--- | :--- | :--- |
-| **Reputation** | `CCICPDIYJIRTMWSXSTLDBTEQXBIMALBLHODQJ62FAKSU3TKEFWBB4EZ7` | [🔗 Verify](https://stellar.expert/explorer/testnet/contract/CCICPDIYJIRTMWSXSTLDBTEQXBIMALBLHODQJ62FAKSU3TKEFWBB4EZ7) | Tracks user credit scores natively on-chain. |
+| **Reputation** | `CDJ7GFD55PWRICINNPA34XRCUR76BPPT7TUADNCYZZZAFCZUXJZNUPHN` | [🔗 Verify](https://stellar.expert/explorer/testnet/contract/CDJ7GFD55PWRICINNPA34XRCUR76BPPT7TUADNCYZZZAFCZUXJZNUPHN) | Tracks user credit scores natively on-chain. |
 | **Escrow** | `CBDVGF5KYW2SWP5XYIDNCQXSWDG7UYFXAR75SCOHTWDM3KR5NNZNR22S` | [🔗 Verify](https://stellar.expert/explorer/testnet/contract/CBDVGF5KYW2SWP5XYIDNCQXSWDG7UYFXAR75SCOHTWDM3KR5NNZNR22S) | Secures lender funds and manages collateral routing. |
-| **Lending** | `CATWVUHA7SFVCAR4OTA7GXM4LOLCFSTXEXHMINM2BZYUCELWQG46BEBP` | [🔗 Verify](https://stellar.expert/explorer/testnet/contract/CATWVUHA7SFVCAR4OTA7GXM4LOLCFSTXEXHMINM2BZYUCELWQG46BEBP) | Core loan logic, interest calculation, and repayment terms. |
-| **Default Mgmt** | `CACK4Q7YAXC3UTDJ74ERT54FUBXJJ5ZH73GL2S4WPM3Y6MOYZE2QUUZ5` | [🔗 Verify](https://stellar.expert/explorer/testnet/contract/CACK4Q7YAXC3UTDJ74ERT54FUBXJJ5ZH73GL2S4WPM3Y6MOYZE2QUUZ5) | Handles liquidation thresholds and insurance payouts. |
-| **Liquidity Pool** |  `CAXX5Q7YAXC3UTDJ74ERT54FUBXJJ5ZH73GL2S4WPM3Y6MOYZE2QUUZ5` | [🔗 Verify](https://stellar.expert/explorer/testnet/contract/CAXX5Q7YAXC3UTDJ74ERT54FUBXJJ5ZH73GL2S4WPM3Y6MOYZE2QUUZ5) | Manages automated pool liquidity, LP token minting, and dynamic utilization-based interest rate modeling. |
-| **Oracle Adapter** | *(Pending Testnet Deployment)* | N/A | Fetches off-chain price feeds for collateral health checks. |
+| **Lending** | `CC5VJNFGBCFWBXISZCKEE4VPW7NRNO2YPCAT2DP27QZPK25BVKP4VS7P` | [🔗 Verify](https://stellar.expert/explorer/testnet/contract/CC5VJNFGBCFWBXISZCKEE4VPW7NRNO2YPCAT2DP27QZPK25BVKP4VS7P) | Core loan logic, interest calculation, and repayment terms. |
+| **Default Mgmt** | `CAS77XVPTXN6KE2GR2QVJW4UBBKQIV7TZ3E3WIAMYIV2Q5AG3E6LUXEH` | [🔗 Verify](https://stellar.expert/explorer/testnet/contract/CAS77XVPTXN6KE2GR2QVJW4UBBKQIV7TZ3E3WIAMYIV2Q5AG3E6LUXEH) | Handles liquidation thresholds and insurance payouts. |
+| **Liquidity Pool** |  `CD4IOANP5BROTWICDIL6NGP3NOVAHWELTXX6QQBOWCVCYQIHN6ESHUOT` | [🔗 Verify](https://stellar.expert/explorer/testnet/contract/CD4IOANP5BROTWICDIL6NGP3NOVAHWELTXX6QQBOWCVCYQIHN6ESHUOT) | Manages automated pool liquidity, LP token minting, and dynamic utilization-based interest rate modeling. |
+| **Oracle Adapter** | `CCAR6CUPDU7JEVOCG53SEDFBFOGBBTDBVMGKYZXOIPG6E2IFPRM35AQB` | [🔗 Verify](https://stellar.expert/explorer/testnet/contract/CCAR6CUPDU7JEVOCG53SEDFBFOGBBTDBVMGKYZXOIPG6E2IFPRM35AQB) | Fetches off-chain price feeds for collateral health checks. |
 
 *You can verify transactions and state for these contracts using the [Stellar Expert Testnet Explorer](https://stellar.expert/explorer/testnet).*
 
